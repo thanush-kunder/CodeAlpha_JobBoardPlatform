@@ -1,0 +1,391 @@
+{
+  "info": {
+    "name": "Job Board Platform API",
+    "description": "API collection for Job Board Platform - CodeAlpha Project",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register Employer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"companyName\": \"Tech Company Inc\",\n  \"email\": \"employer@company.com\",\n  \"password\": \"password123\",\n  \"industry\": \"Technology\",\n  \"companySize\": \"51-200\",\n  \"website\": \"https://company.com\",\n  \"location\": \"San Francisco, CA\",\n  \"description\": \"Leading tech company\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/employer/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "employer", "register"]
+            }
+          }
+        },
+        {
+          "name": "Register Candidate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\",\n  \"phone\": \"+1234567890\",\n  \"location\": \"New York, NY\",\n  \"skills\": [\"JavaScript\", \"Node.js\", \"React\"],\n  \"experience\": 5\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/candidate/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "candidate", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login Employer",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"employer@company.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/employer/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "employer", "login"]
+            }
+          }
+        },
+        {
+          "name": "Login Candidate",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/candidate/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "candidate", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "me"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Jobs",
+      "item": [
+        {
+          "name": "Get All Jobs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/jobs",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobs"]
+            }
+          }
+        },
+        {
+          "name": "Search Jobs with Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/jobs?keyword=developer&location=San Francisco&jobType=full-time",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobs"],
+              "query": [
+                {
+                  "key": "keyword",
+                  "value": "developer"
+                },
+                {
+                  "key": "location",
+                  "value": "San Francisco"
+                },
+                {
+                  "key": "jobType",
+                  "value": "full-time"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Job",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Senior Software Engineer\",\n  \"description\": \"We are looking for a senior software engineer...\",\n  \"requirements\": \"5+ years of experience in software development...\",\n  \"responsibilities\": \"Design and implement software solutions...\",\n  \"location\": \"San Francisco, CA\",\n  \"jobType\": \"full-time\",\n  \"category\": \"Engineering\",\n  \"experienceLevel\": \"senior\",\n  \"skills\": [\"JavaScript\", \"Node.js\", \"React\", \"MongoDB\"],\n  \"salary\": {\n    \"min\": 100000,\n    \"max\": 150000,\n    \"currency\": \"USD\",\n    \"isNegotiable\": false\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/jobs",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobs"]
+            }
+          }
+        },
+        {
+          "name": "Get Employer's Jobs",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/jobs/employer/my-jobs",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "jobs", "employer", "my-jobs"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Applications",
+      "item": [
+        {
+          "name": "Apply for Job",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"jobId\": \"{{jobId}}\",\n  \"coverLetter\": \"I am very interested in this position...\",\n  \"expectedSalary\": 120000,\n  \"resume\": \"path/to/resume.pdf\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/applications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "applications"]
+            }
+          }
+        },
+        {
+          "name": "Get Candidate's Applications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/candidate/my-applications",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "applications", "candidate", "my-applications"]
+            }
+          }
+        },
+        {
+          "name": "Get Employer's Applications",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/employer/received",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "applications", "employer", "received"]
+            }
+          }
+        },
+        {
+          "name": "Update Application Status",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{employerToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"interview\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/applications/:id/status",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "applications", ":id", "status"],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "65a1b2c3d4e5f6g7h8i9j0k"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Resumes & Profile",
+      "item": [
+        {
+          "name": "Upload Resume",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}"
+              }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "resume",
+                  "type": "file",
+                  "src": []
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/resumes/upload",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "resumes", "upload"]
+            }
+          }
+        },
+        {
+          "name": "Update Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"skills\": [\"JavaScript\", \"Node.js\", \"React\", \"Python\"],\n  \"experience\": 5,\n  \"bio\": \"Full-stack developer with 5 years of experience\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/resumes/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "resumes", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Get Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{candidateToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/resumes/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "resumes", "profile"]
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5003"
+    },
+    {
+      "key": "token",
+      "value": ""
+    },
+    {
+      "key": "employerToken",
+      "value": ""
+    },
+    {
+      "key": "candidateToken",
+      "value": ""
+    },
+    {
+      "key": "jobId",
+      "value": ""
+    }
+  ]
+}
